@@ -96,7 +96,21 @@ pre.manifest em{color:var(--green);font-style:normal}
 .arch li{margin-left:18px;color:var(--muted);margin-bottom:6px}
 footer{border-top:1px solid var(--line);padding:30px 0 50px;color:var(--muted);font-size:13px}
 footer .hash{margin-right:12px}
-@media (max-width:560px){.bar nav{display:none}.grid{grid-template-columns:1fr}}
+.burger{display:none;background:transparent;border:1px solid var(--line);width:42px;height:38px;cursor:pointer;padding:0;position:relative}
+.burger span{position:absolute;left:10px;right:10px;height:2px;background:var(--text);transition:transform .2s,opacity .2s}
+.burger span:nth-child(1){top:11px}.burger span:nth-child(2){top:17px}.burger span:nth-child(3){top:23px}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.preview .logo-img{height:86%;width:auto;max-width:86%;object-fit:contain}
+section{scroll-margin-top:56px}
+@media (max-width:700px){
+  .burger{display:block}
+  .bar nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--line)}
+  .bar nav.open{display:flex}
+  .bar nav a{padding:15px 20px;border-top:1px solid var(--line);font-size:14px}
+}
+@media (max-width:560px){.grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.cursor{animation:none}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -105,11 +119,12 @@ footer .hash{margin-right:12px}
 <header class="bar">
   <div class="wrap">
     <span><b>&gt;_</b> codigo-comun</span>
-    <nav>
+    <nav id="menu" aria-label="Navegación principal">
       <a href="#campanas">campañas</a>
-      <a href="#manifiesto">Objetivo.exe</a>
+      <a href="#manifiesto">manifest.md</a>
       <a href="#arquitectura">arquitectura</a>
     </nav>
+    <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
   </div>
 </header>
 
@@ -188,7 +203,7 @@ Compartimos las llaves, liberamos el conocimiento y compilamos oportunidades.
 <footer>
   <div class="wrap">
     <p><span class="hash">#CodigoComun</span><span class="hash">#HackeandoLaBrecha</span></p>
-    <p style="margin-top:10px">Código Común — campaña sombrilla de inclusión digital. Proyecto académico.</p>
+    <p style="margin-top:10px">Código Común — campaña sombrilla de inclusión digital.</p>
   </div>
 </footer>
 
@@ -207,14 +222,14 @@ const CAMPANAS = [
   { v:1,  nombre:"Campaña v1",  red:"Instagram", url:"", handle:"", logo:"", preview:"" },
   { v:2,  nombre:"Campaña v2",  red:"TikTok",    url:"", handle:"", logo:"", preview:"" },
   { v:3,  nombre:"Campaña v3",  red:"Facebook",  url:"", handle:"", logo:"", preview:"" },
-  { v:4,  nombre:"Campaña v4",  red:"X",         url:"https://x.com/caraotadigsmxl?s=11", handle:"@modoavionsocial", logo:"", preview:"" },
-  { v:5,  nombre:"Campaña v5",  red:"X",         url:"https://x.com/modoavionsocial?s=11", handle:"@modoavionsocial", logo:"", preview:"" },
-  { v:6,  nombre:"Campaña v6",  red:"X",         url:"https://x.com/Robticaedunvyi", handle:"@Robticaedunvyi", logo:"", preview:"" },
-  { v:7,  nombre:"Campaña v7",  red:"Facebook",  url:"https://www.facebook.com/profile.php?id=61596198104521", handle:"facebook.com/profile.php?id=61596198104521", logo:"", preview:"" },
+  { v:4,  nombre:"Campaña v4",  red:"X",         url:"https://x.com/caraotadigsmxl?s=11", handle:"@caraotadigsmxl", logo:"img/logo-v4.png", preview:"" },
+  { v:5,  nombre:"Campaña v5",  red:"X",         url:"https://x.com/modoavionsocial?s=11", handle:"@ModoAvionSocial", logo:"img/logo-v5.png", preview:"" },
+  { v:6,  nombre:"Campaña v6",  red:"X",         url:"https://x.com/Robticaedunvyi", handle:"@Robticaedunvyi", logo:"img/logo-v6.png", preview:"" },
+  { v:7,  nombre:"Campaña v7",  red:"Facebook",  url:"https://www.facebook.com/profile.php?id=61596198104521", handle:"@PvPcontralaBrechaDigital", logo:"img/logo-v7.jpg", preview:"" },
   { v:8,  nombre:"Campaña v8",  red:"X",         url:"", handle:"", logo:"", preview:"" },
   { v:9,  nombre:"Campaña v9",  red:"Instagram", url:"", handle:"", logo:"", preview:"" },
   { v:10, nombre:"Campaña v10", red:"TikTok",    url:"", handle:"", logo:"", preview:"" },
-  { v:11, nombre:"Campaña v11", red:"TikTok",    url:"https://www.tiktok.com/@curis_informatica77?_r=1&_t=ZS-9BQic6AzlOG", handle:"@curis_informatica77", logo:"", preview:"" }
+  { v:11, nombre:"Campaña v11", red:"TikTok",    url:"https://www.tiktok.com/@curis_informatica77?_r=1&_t=ZS-9BQic6AzlOG", handle:"@curis_informatica77", logo:"img/logo-v11.jpg", preview:"" }
 ];
 
 const REDES = {
@@ -234,12 +249,12 @@ function tarjeta(m){
   el.className = "card";
   el.dataset.red = m.red;
 
-  const logo = m.logo
-    ? `<span class="logo"><img src="${m.logo}" alt="Logo de la campaña ${m.v}"></span>`
-    : `<span class="logo ${r.cls}" aria-hidden="true">${r.sigla}</span>`;
+  const logo = `<span class="logo ${r.cls}" aria-hidden="true">${r.sigla}</span>`;
   const prev = m.preview
     ? `<img src="${m.preview}" alt="Última publicación destacada de la campaña ${m.v}" loading="lazy">`
-    : `<span>// captura de la última publicación<br>${m.preview === "" ? "(pendiente)" : ""}</span>`;
+    : m.logo
+      ? `<img class="logo-img" src="${m.logo}" alt="Logo de la campaña ${m.v}" loading="lazy">`
+      : `<span>// captura de la última publicación<br>(pendiente)</span>`;
   const boton = online
     ? `<a class="btn" href="${m.url}" target="_blank" rel="noopener noreferrer">Ver en vivo en ${m.red} -&gt;</a>`
     : `<span class="btn disabled" aria-disabled="true">Enlace por conectar</span>`;
@@ -280,6 +295,12 @@ document.getElementById("n-off").textContent = CAMPANAS.length - on;
   });
   filters.appendChild(b);
 });
+
+/* menú hamburguesa */
+const burger = document.getElementById("burger"), menu = document.getElementById("menu");
+function setMenu(abierto){ menu.classList.toggle("open", abierto); burger.setAttribute("aria-expanded", abierto); }
+burger.addEventListener("click", () => setMenu(!menu.classList.contains("open")));
+menu.addEventListener("click", e => { if (e.target.tagName === "A") setMenu(false); });
 </script>
 </body>
 </html>
