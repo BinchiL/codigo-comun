@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Código Común — Hackeando la Brecha Digital</title>
+<meta name="description" content="Hub central de la campaña sombrilla Código Común: 11 módulos para hackear la brecha digital.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F172A; --panel:#131d36; --line:#26334f; --text:#E2E8F0; --muted:#94A3B8;
+  --blue:#2563EB; --green:#22C55E; --violet:#7C3AED; --white:#FFFFFF;
+  --mono:"JetBrains Mono","Fira Code",ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);line-height:1.65;font-size:15px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* barra superior */
+.bar{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(15,23,42,.94);backdrop-filter:blur(6px);z-index:5}
+.bar .wrap{display:flex;justify-content:space-between;align-items:center;height:52px;gap:16px}
+.bar b{color:var(--green);font-weight:600}
+.bar nav{display:flex;gap:18px;font-size:13px}
+.bar nav a{text-decoration:none;color:var(--muted)}
+.bar nav a:hover{color:var(--white)}
+
+/* hero */
+.hero{padding:64px 0 48px}
+.term{border:1px solid var(--line);background:var(--panel)}
+.term-head{display:flex;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);align-items:center;color:var(--muted);font-size:12px}
+.dot{width:10px;height:10px;background:var(--line)}
+.dot:nth-child(1){background:var(--violet)}.dot:nth-child(2){background:var(--blue)}.dot:nth-child(3){background:var(--green)}
+.term-body{padding:28px 24px 32px}
+.prompt{color:var(--green);font-size:14px}
+h1{font-size:clamp(34px,7vw,72px);line-height:1.05;font-weight:800;color:var(--white);margin:14px 0 18px;letter-spacing:-.03em}
+h1 span{color:var(--blue)}
+.lead{max-width:62ch;color:var(--muted)}
+.cursor{display:inline-block;width:.55em;height:1em;background:var(--green);vertical-align:-.12em;animation:blink 1.1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.tag{border:1px solid var(--violet);color:#C4B5FD;padding:3px 10px;font-size:13px}
+.stats{display:flex;flex-wrap:wrap;gap:0;margin-top:30px;border:1px solid var(--line)}
+.stat{flex:1 1 140px;padding:14px 18px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat strong{display:block;font-size:26px;color:var(--white)}
+.stat small{color:var(--muted)}
+
+/* secciones */
+section{padding:44px 0;border-top:1px solid var(--line)}
+h2{font-size:22px;color:var(--white);margin-bottom:6px}
+h2::before{content:"> ";color:var(--green)}
+.sub{color:var(--muted);margin-bottom:26px;max-width:70ch}
+
+/* filtros */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.filters button{font:inherit;font-size:13px;background:transparent;color:var(--muted);border:1px solid var(--line);padding:6px 14px;cursor:pointer}
+.filters button:hover{color:var(--white);border-color:var(--muted)}
+.filters button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--white)}
+
+/* tarjetas */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column}
+.card-top{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line)}
+.net{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.logo{width:34px;height:34px;display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff;flex:none}
+.logo img{width:100%;height:100%;object-fit:cover}
+.ig{background:linear-gradient(45deg,#F59E0B,#DB2777,#7C3AED)}
+.tt{background:#000;box-shadow:inset 2px 0 #22D3EE,inset -2px 0 #F43F5E}
+.fb{background:#1877F2}
+.x{background:#000;border:1px solid #444}
+.ver{color:var(--green);font-weight:600;font-size:15px}
+.preview{aspect-ratio:16/9;background:repeating-linear-gradient(135deg,#0F172A 0 12px,#111c37 12px 24px);display:grid;place-items:center;color:var(--muted);font-size:12px;text-align:center;padding:10px;overflow:hidden}
+.preview img{width:100%;height:100%;object-fit:cover}
+.card-body{padding:16px;flex:1;display:flex;flex-direction:column;gap:6px}
+.card h3{font-size:17px;color:var(--white)}
+.handle{color:var(--muted);font-size:13px;word-break:break-all}
+.hash{color:#C4B5FD;font-size:13px}
+.status{font-size:12px;margin-top:2px}
+.on{color:var(--green)}.off{color:#A78BFA}
+.btn{margin-top:auto;display:block;text-align:center;text-decoration:none;font-weight:600;font-size:14px;padding:11px 14px;background:var(--blue);color:var(--white);border:1px solid var(--blue);transition:background .15s,border-color .15s}
+.btn:hover{background:var(--green);border-color:var(--green);color:#052e16}
+.btn.disabled{background:transparent;border:1px dashed var(--line);color:var(--muted);pointer-events:none}
+.card-body .btn{margin-top:14px}
+
+/* manifiesto y arquitectura */
+pre.manifest{background:var(--panel);border:1px solid var(--line);padding:22px;white-space:pre-wrap;font-family:var(--mono);color:var(--text);max-width:80ch}
+pre.manifest em{color:var(--green);font-style:normal}
+.arch{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.arch div{border:1px solid var(--line);padding:18px;background:var(--panel)}
+.arch h3{color:var(--white);font-size:16px;margin-bottom:8px}
+.arch li{margin-left:18px;color:var(--muted);margin-bottom:6px}
+footer{border-top:1px solid var(--line);padding:30px 0 50px;color:var(--muted);font-size:13px}
+footer .hash{margin-right:12px}
+@media (max-width:560px){.bar nav{display:none}.grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.cursor{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <span><b>&gt;_</b> codigo-comun</span>
+    <nav>
+      <a href="#modulos">modulos</a>
+      <a href="#manifiesto">manifest.md</a>
+      <a href="#arquitectura">arquitectura</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="term">
+      <div class="term-head"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span style="margin-left:8px">hub@codigo-comun: ~/brecha-digital</span></div>
+      <div class="term-body">
+        <div class="prompt">$ sudo run(hackearLaBrecha)</div>
+        <h1>Código<br><span>Común</span><span class="cursor" aria-hidden="true"></span></h1>
+        <p class="lead">Hackeando la brecha digital. La conectividad y el conocimiento no deberían tener licencia restrictiva: aquí liberamos el acceso con 11 módulos que corren en redes sociales y en territorio.</p>
+        <div class="tags">
+          <span class="tag">#CodigoComun</span>
+          <span class="tag">#HackeandoLaBrecha</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>11</strong><small>módulos</small></div>
+          <div class="stat"><strong id="n-on">0</strong><small>en línea</small></div>
+          <div class="stat"><strong id="n-off">0</strong><small>por conectar</small></div>
+          <div class="stat"><strong>4</strong><small>redes</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="modulos">
+    <h2>modulos/</h2>
+    <p class="sub">Cada módulo es un parche independiente con su propia cuenta. Elige una red para filtrar o abre cualquier tarjeta para verlo en vivo.</p>
+    <div class="filters" id="filters" role="group" aria-label="Filtrar por red social"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section id="manifiesto">
+    <h2>MANIFEST.md</h2>
+    <p class="sub">El texto que une a los 11 módulos.</p>
+<pre class="manifest">El conocimiento y la conectividad no deberían tener una licencia restrictiva.
+Durante décadas, el acceso al ecosistema digital se ha tratado como un privilegio de pago, cerrando puertas y aislando comunidades enteras.
+
+Creemos en un mundo donde el acceso a la red sea un estándar libre, modular y accesible para cualquier persona, sin importar su código postal.
+La brecha digital es un sistema privativo que vamos a desmantelar juntos.
+
+No pedimos permiso para conectar.
+Compartimos las llaves, liberamos el conocimiento y compilamos oportunidades.
+
+<em>Somos Código Común. Hackeemos la brecha digital.</em></pre>
+  </section>
+
+  <section id="arquitectura">
+    <h2>arquitectura/</h2>
+    <p class="sub">La brecha digital se trata como un bug del sistema: se corrige entre todos, de forma distribuida.</p>
+    <div class="arch">
+      <div>
+        <h3>Hub web central</h3>
+        <ul>
+          <li>Repositorio maestro alojado en GitHub Pages.</li>
+          <li>Índice con el estado de cada módulo.</li>
+          <li>Recursos liberados: PDFs, guías y kits descargables.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>11 módulos distribuidos</h3>
+        <ul>
+          <li>Cada uno gestiona sus redes: Facebook, Instagram, X y TikTok.</li>
+          <li>Autonomía temática, alineada a la sombrilla.</li>
+          <li>Envían tráfico al Hub y el Hub reparte audiencia entre ellos.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><span class="hash">#CodigoComun</span><span class="hash">#HackeandoLaBrecha</span></p>
+    <p style="margin-top:10px">Código Común — campaña sombrilla de inclusión digital. Proyecto académico.</p>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   EDITA AQUÍ: un objeto por módulo.
+   - nombre: nombre de la subcampaña (cámbialo cuando lo tengas)
+   - red: "Instagram" | "TikTok" | "Facebook" | "X"
+   - url: enlace real; déjalo "" si aún falta (la tarjeta queda "por conectar")
+   - handle: texto visible de la cuenta (opcional)
+   - logo: ruta del logo del módulo, ej. "img/logo-v1.png" (opcional)
+   - preview: captura de la última publicación, ej. "img/v1.jpg" (opcional)
+   - tag: hashtag del módulo
+   ============================================================ */
+const MODULOS = [
+  { v:1,  nombre:"Módulo v1",  red:"Instagram", url:"", handle:"", logo:"", preview:"" },
+  { v:2,  nombre:"Módulo v2",  red:"TikTok",    url:"", handle:"", logo:"", preview:"" },
+  { v:3,  nombre:"Módulo v3",  red:"Facebook",  url:"", handle:"", logo:"", preview:"" },
+  { v:4,  nombre:"Módulo v4",  red:"X",         url:"https://x.com/modoavionsocial?s=11", handle:"@modoavionsocial", logo:"", preview:"" },
+  { v:5,  nombre:"Módulo v5",  red:"X",         url:"https://x.com/modoavionsocial?s=11", handle:"@modoavionsocial", logo:"", preview:"" },
+  { v:6,  nombre:"Módulo v6",  red:"X",         url:"https://x.com/Robticaedunvyi", handle:"@Robticaedunvyi", logo:"", preview:"" },
+  { v:7,  nombre:"Módulo v7",  red:"Facebook",  url:"https://www.facebook.com/profile.php?id=61596198104521", handle:"facebook.com/profile.php?id=61596198104521", logo:"", preview:"" },
+  { v:8,  nombre:"Módulo v8",  red:"X",         url:"", handle:"", logo:"", preview:"" },
+  { v:9,  nombre:"Módulo v9",  red:"Instagram", url:"", handle:"", logo:"", preview:"" },
+  { v:10, nombre:"Módulo v10", red:"TikTok",    url:"", handle:"", logo:"", preview:"" },
+  { v:11, nombre:"Módulo v11", red:"TikTok",    url:"https://www.tiktok.com/@curis_informatica77?_r=1&_t=ZS-9BQic6AzlOG", handle:"@curis_informatica77", logo:"", preview:"" }
+];
+
+const REDES = {
+  "Instagram": { cls:"ig", sigla:"IG" },
+  "TikTok":    { cls:"tt", sigla:"TT" },
+  "Facebook":  { cls:"fb", sigla:"f"  },
+  "X":         { cls:"x",  sigla:"X"  }
+};
+
+const grid = document.getElementById("grid");
+const filters = document.getElementById("filters");
+
+function tarjeta(m){
+  const r = REDES[m.red];
+  const online = !!m.url;
+  const el = document.createElement("article");
+  el.className = "card";
+  el.dataset.red = m.red;
+
+  const logo = m.logo
+    ? `<span class="logo"><img src="${m.logo}" alt="Logo del módulo ${m.v}"></span>`
+    : `<span class="logo ${r.cls}" aria-hidden="true">${r.sigla}</span>`;
+  const prev = m.preview
+    ? `<img src="${m.preview}" alt="Última publicación destacada del módulo ${m.v}" loading="lazy">`
+    : `<span>// captura de la última publicación<br>${m.preview === "" ? "(pendiente)" : ""}</span>`;
+  const boton = online
+    ? `<a class="btn" href="${m.url}" target="_blank" rel="noopener noreferrer">Ver en vivo en ${m.red} -&gt;</a>`
+    : `<span class="btn disabled" aria-disabled="true">Enlace por conectar</span>`;
+
+  el.innerHTML = `
+    <div class="card-top">
+      <span class="net">${logo}${m.red}</span>
+      <span class="ver">v${m.v}.0</span>
+    </div>
+    <div class="preview">${prev}</div>
+    <div class="card-body">
+      <h3>${m.nombre}</h3>
+      <div class="handle">${m.handle || "sin cuenta asignada"}</div>
+      <div class="hash">#Modulo_v${m.v}</div>
+      <div class="status ${online ? "on" : "off"}">${online ? "● online" : "○ pendiente"}</div>
+      ${boton}
+    </div>`;
+  return el;
+}
+
+MODULOS.forEach(m => grid.appendChild(tarjeta(m)));
+
+/* contadores */
+const on = MODULOS.filter(m => m.url).length;
+document.getElementById("n-on").textContent = on;
+document.getElementById("n-off").textContent = MODULOS.length - on;
+
+/* filtros */
+["Todas", ...Object.keys(REDES)].forEach((nombre, i) => {
+  const b = document.createElement("button");
+  b.textContent = nombre;
+  b.setAttribute("aria-pressed", i === 0);
+  b.addEventListener("click", () => {
+    filters.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    grid.querySelectorAll(".card").forEach(c => {
+      c.hidden = !(nombre === "Todas" || c.dataset.red === nombre);
+    });
+  });
+  filters.appendChild(b);
+});
+</script>
+</body>
+</html>
