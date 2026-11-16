@@ -121,7 +121,7 @@ section{scroll-margin-top:56px}
     <span><b>&gt;_</b> codigo-comun</span>
     <nav id="menu" aria-label="Navegación principal">
       <a href="#campanas">campañas</a>
-      <a href="#manifiesto">Objetivos.md</a>
+      <a href="#manifiesto">Objetivo.md</a>
       <a href="#arquitectura">arquitectura</a>
     </nav>
     <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
@@ -219,14 +219,14 @@ Compartimos las llaves, liberamos el conocimiento y compilamos oportunidades.
    - tag: hashtag de la campaña
    ============================================================ */
 const CAMPANAS = [
-  { v:1,  nombre:"Campaña v1",  red:"Instagram", url:"https://www.instagram.com/laclave.ya?utm_source=ig_web_button_share_sheet&cplk=ZDNlZDc0MzIxNw==", handle:"laclave.ya", logo:"/img/logo-v1.jpg", preview:"" },
-  { v:2,  nombre:"Campaña v2",  red:"TikTok",    url:"", handle:"", logo:"", preview:"" },
+  { v:1,  nombre:"Campaña v1",  red:"Instagram", url:"https://www.instagram.com/laclave.ya?utm_source=ig_web_button_share_sheet&cplk=ZDNlZDc0MzIxNw==", handle:"laclave.ya", logo:"img/logo-v1.jpg", preview:"" },
+  { v:2,  nombre:"Campaña v2",  red:"Facebook",    url:"https://www.facebook.com/share/19svRQtjCU/", handle:"Hackeando la Brecha", logo:"img/logo-v2.png", preview:"" },
   { v:3,  nombre:"Campaña v3",  red:"Facebook",  url:"", handle:"", logo:"", preview:"" },
   { v:4,  nombre:"Campaña v4",  red:"X",         url:"https://x.com/caraotadigsmxl?s=11", handle:"@caraotadigsmxl", logo:"img/logo-v4.png", preview:"" },
   { v:5,  nombre:"Campaña v5",  red:"X",         url:"https://x.com/modoavionsocial?s=11", handle:"@ModoAvionSocial", logo:"img/logo-v5.png", preview:"" },
   { v:6,  nombre:"Campaña v6",  red:"X",         url:"https://x.com/Robticaedunvyi", handle:"@Robticaedunvyi", logo:"img/logo-v6.png", preview:"" },
-  { v:7,  nombre:"Campaña v7",  red:"Facebook",  url:"https://www.facebook.com/profile.php?id=61596198104521", handle:"@PvPcontralaBrechaDigital", logo:"img/logo-v7.jpg", preview:"" },
-  { v:8,  nombre:"Campaña v8",  red:"X",         url:"", handle:"", logo:"", preview:"" },
+  { v:7,  nombre:"Campaña v7",  red:"Facebook",  url:"https://www.facebook.com/profile.php?id=61596198104521", handle:"@PvP contra la Brecha Digital", logo:"img/logo-v7.jpg", preview:"" },
+  { v:8,  nombre:"Campaña v8",  red:"Instagram", url:"https://www.instagram.com/goose.90812074?mdxt=ODl6OXg0NDI3ZTF5", handle:"goose.90812074", logo:"img/logo-v8.jpeg", preview:"" },
   { v:9,  nombre:"Campaña v9",  red:"Instagram", url:"", handle:"", logo:"", preview:"" },
   { v:10, nombre:"Campaña v10", red:"TikTok",    url:"", handle:"", logo:"", preview:"" },
   { v:11, nombre:"Campaña v11", red:"TikTok",    url:"https://www.tiktok.com/@curis_informatica77?_r=1&_t=ZS-9BQic6AzlOG", handle:"@curis_informatica77", logo:"img/logo-v11.jpg", preview:"" }
@@ -254,7 +254,7 @@ function tarjeta(m){
     ? `<img src="${m.preview}" alt="Última publicación destacada de la campaña ${m.v}" loading="lazy">`
     : m.logo
       ? `<img class="logo-img" src="${m.logo}" alt="Logo de la campaña ${m.v}" loading="lazy">`
-      : `<span>// captura de la última publicación<br>(pendiente)</span>`;
+      : `<span>// captura del logo de la campaña<br>(pendiente)</span>`;
   const boton = online
     ? `<a class="btn" href="${m.url}" target="_blank" rel="noopener noreferrer">Ver en vivo en ${m.red} -&gt;</a>`
     : `<span class="btn disabled" aria-disabled="true">Enlace por conectar</span>`;
